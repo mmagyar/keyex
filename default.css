@@ -1,0 +1,30 @@
+body,html {
+	text-align: center;
+	padding:0;
+	border:0;
+	margin:0;
+}
+
+#content{
+	margin-left: auto;
+	margin-right: auto;
+	min-width:400px;
+	width:80%;
+
+}
+.keyex{
+	min-width: 150px;
+	min-height: 150px;
+}
+.flexContainer{
+	display:flex;
+
+}
+.flexContainer textarea{
+	flex-grow:  10;
+	resize: none;
+}
+.flexContainer div{
+	display:none;
+
+}

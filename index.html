@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>KeyEx: Text Input Experiment</title>
+	<LINK href="default.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="content">
+	<h2>KeyEx: Text Input Experiment</h2>
+
+	<p>For the best experiance use a keyboard with atleast 6-KRO</p>
+
+	<p>
+		<a href="http://en.wikipedia.org/wiki/Rollover_%28key%29">Read about key rollover on Wikipedia</a>
+	</p>
+
+	<div>
+		<h3>Experiment #1: Key squence</h3>
+
+		<p>This experiment is about using as few keys as possible with only two keys pressed at any time (+ a modifier key), so it would work on any computer keyboard</p>
+
+		<p>The order of the keypresses are significant</p>
+
+		<p>
+			<a href="html/sequence_layout.html">You can find the layout here</a><br />
+			<button onclick="var e =document.getElementById('sequence_layout'); toggleVisiblity(e);"> Click here to show/hide layout next to the text area</button>
+		</p>
+
+		<div class="flexContainer">
+			<div id="sequence_layout"></div>
+			<textarea id="sequence_textarea" class="keyex"></textarea><br />
+		</div>
+	</div>
+</div>
+<script src="js/sequence.js"></script>
+<script>
+	function getFile(filePath, callBack) {
+
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4) {
+				if (xmlhttp.status == 200) {
+					callBack(xmlhttp);
+				} else if (xmlhttp.status == 400) {
+					console.error('There was an error 400');
+				} else {
+					console.error('something else other than 200 was returned:' + xmlhttp.status);
+				}
+			}
+		};
+
+		xmlhttp.open("GET", filePath, true);
+		xmlhttp.send();
+
+	}
+	function experimentStarter(experimentFn, experimentElement) {
+		experimentElement.addEventListener('keypress', function (e) {
+			e.preventDefault();
+		});
+		var customKeypress = function (e) {
+			if (e !== null) {
+				experimentElement.value += e;
+			}
+		};
+		experimentFn(experimentElement, customKeypress, true);
+	}
+	function toggleVisiblity(element) {
+		var display = getComputedStyle(element, null).display;
+		if (display == 'none') {
+			element.style.display = 'inline';
+		} else {
+			element.style.display = 'none'
+		}
+
+	}
+	experimentStarter(sequence, document.getElementById('sequence_textarea'));
+
+	getFile("html/sequence_layout.html", function (req) {
+		document.getElementById('sequence_layout').innerHTML = req.responseText;
+	})
+</script>
+</body>
+</html>
